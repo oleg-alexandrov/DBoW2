@@ -6,11 +6,15 @@ LFLAGS=-LDBoW2 -lDBoW2 -LDLib/lib -lDVision -lDUtilsCV -lDUtils \
 
 DEPS=lib/libDBoW2.so dlib
 TARGET=demo
+TARGET_SURF=demo_surf
 
-all: $(TARGET)
+all: $(TARGET) $(TARGET_SURF)
 
 $(TARGET): $(TARGET).o $(DEPS)
 	$(CC) $(TARGET).o $(LFLAGS) -o $@
+
+$(TARGET_SURF): $(TARGET_SURF).o $(DEPS)
+	$(CC) $(TARGET_SURF).o $(LFLAGS) -o $@
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -22,10 +26,10 @@ lib/libDBoW2.so:
 	make -C DBoW2 && mkdir -p ./lib/ && cp DBoW2/libDBoW2.so ./lib/
 
 clean:
-	rm -f *.o $(TARGET); rm -f ./lib/*.so; \
+	rm -f *.o $(TARGET) $(TARGET_SURF); rm -f ./lib/*.so; \
 	make -C DBoW2 clean; make -C DLib clean
 
-install: $(TARGET)
+install: $(TARGET) $(TARGET_SURF)
 	make -C DBoW2 install && cp DBoW2/libDBoW2.so ./lib/
 
 uninstall:
