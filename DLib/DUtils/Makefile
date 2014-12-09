@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-DNDEBUG -fPIC -O3 -Wall $(FL)
+CFLAGS=-DNDEBUG -fPIC -O3 -Wall $(FLAGS)
 LFLAGS=-shared
 
 LIBNAME=DUtils
@@ -25,7 +25,7 @@ ifneq ($(MAKECMDGOALS),clean)
 endif
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET): $(SRCS:.cpp=.o)
 	$(CC) $^ $(LFLAGS) -o $@
@@ -38,8 +38,7 @@ install: $(TARGET)
 	mkdir -p $(INSTALL_INCLUDE)/$(LIBNAME) && \
 	cp *.h *.hpp $(INSTALL_INCLUDE)/$(LIBNAME)/
 
-uninstall: 
+uninstall:
 	rm $(INSTALL_LIB)/$(TARGET); \
 	rm $(INSTALL_INCLUDE)/$(LIBNAME)/*; \
 	rmdir $(INSTALL_INCLUDE)/$(LIBNAME)
-

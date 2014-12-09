@@ -1,7 +1,6 @@
 CC=gcc
-CFLAGS=-DNDEBUG -fPIC -O3 -Wall -I../DUtils -I../DUtilsCV \
-  $(shell pkg-config --cflags opencv)  $(FL)
-LFLAGS=-shared $(shell pkg-config --libs opencv)
+CFLAGS=-DNDEBUG -fPIC -O3 -Wall -I../DUtils -I../DUtilsCV $(FLAGS)
+LFLAGS=-shared
 
 LIBNAME=DVision
 PREFIX=/usr/local
@@ -26,7 +25,7 @@ ifneq ($(MAKECMDGOALS),clean)
 endif
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET): $(SRCS:.cpp=.o)
 	$(CC) $^ $(LFLAGS) -o $@
@@ -39,8 +38,7 @@ install: $(TARGET)
 	mkdir -p $(INSTALL_INCLUDE)/$(LIBNAME) && \
 	cp *.h $(INSTALL_INCLUDE)/$(LIBNAME)/
 
-uninstall: 
+uninstall:
 	rm $(INSTALL_LIB)/$(TARGET); \
 	rm $(INSTALL_INCLUDE)/$(LIBNAME)/*; \
 	rmdir $(INSTALL_INCLUDE)/$(LIBNAME)
-

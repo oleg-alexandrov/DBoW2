@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-DNDEBUG -fPIC -O3 -Wall \
-  $(shell pkg-config --cflags opencv)
-LFLAGS=-shared $(shell pkg-config --libs opencv)
+  $(shell pkg-config --cflags opencv) $(FLAGS)
+LFLAGS=-shared
 
 LIBNAME=DBoW2
 PREFIX=/usr/local
@@ -26,7 +26,7 @@ ifneq ($(MAKECMDGOALS),clean)
 endif
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET): $(SRCS:.cpp=.o)
 	$(CC) $^ $(LFLAGS) -o $@
@@ -39,8 +39,7 @@ install: $(TARGET)
 	mkdir -p $(INSTALL_INCLUDE)/$(LIBNAME) && \
 	cp *.h $(INSTALL_INCLUDE)/$(LIBNAME)/
 
-uninstall: 
+uninstall:
 	rm $(INSTALL_LIB)/$(TARGET) && \
 	rm $(INSTALL_INCLUDE)/$(LIBNAME)/* && \
 	rmdir $(INSTALL_INCLUDE)/$(LIBNAME)
-

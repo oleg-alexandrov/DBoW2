@@ -1,7 +1,5 @@
-CFLAGS=-DNDEBUG -O3 -Wall -IDBoW2 \
-  $(shell pkg-config --cflags opencv) $(FL)
+CFLAGS=-DNDEBUG -O3 -Wall -IDBoW2 $(FLAGS)
 
-  
 all:  lib
 
 lib: DUtils/libDUtils.so DUtilsCV/libDUtilsCV.so/ DVision/libDVision.so
@@ -27,4 +25,3 @@ uninstall:
 	make -C DUtils uninstall && \
 	make -C DUtilsCV uninstall && \
 	make -C DVision uninstall
-
