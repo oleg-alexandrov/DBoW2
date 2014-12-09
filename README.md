@@ -1,3 +1,5 @@
+Modified by oalexan1 to use vector<bool> instead of boost::dynamic_bitset.
+
 DBoW2
 =====
 

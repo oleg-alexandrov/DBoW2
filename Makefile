@@ -1,4 +1,4 @@
-CC=g++
+CC=g++ -std=c++11
 CFLAGS=-DNDEBUG -O3 -Wall -IDBoW2 $(FLAGS)
 
 LFLAGS=-LDBoW2 -lDBoW2 -LDLib/lib -lDVision -lDUtilsCV -lDUtils \
@@ -22,6 +22,7 @@ $(TARGET_SURF): $(TARGET_SURF).o $(DEPS)
 dlib:
 	make -C DLib
 
+# bug here, does not get recompiled!
 lib/libDBoW2.so:
 	make -C DBoW2 && mkdir -p ./lib/ && cp DBoW2/libDBoW2.so ./lib/
 

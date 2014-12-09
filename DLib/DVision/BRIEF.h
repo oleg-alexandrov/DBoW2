@@ -42,7 +42,6 @@
 
 #include <opencv/cv.h>
 #include <vector>
-#include <boost/dynamic_bitset.hpp>
 
 namespace DVision {
 
@@ -52,7 +51,7 @@ class BRIEF
 public:
 
   /// Bitset type
-  typedef boost::dynamic_bitset<> bitset;
+  typedef std::vector<bool> bitset;
 
   /// Type of pairs
   enum Type
@@ -172,7 +171,11 @@ public:
    */
   inline static int distance(const bitset &a, const bitset &b)
   {
-    return (a^b).count();
+    int count = 0;
+    for (size_t i  = 0; i < a.size(); i++)
+      count += (a[i]^b[i]);
+
+    return count;
   }
 
 protected:

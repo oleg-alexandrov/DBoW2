@@ -1,11 +1,11 @@
-/*	
+/*
  * File: Profiler.h
  * Project: DUtils library
  * Author: Dorian Galvez-Lopez
  * Date: September 14, 2010
  * Description: class for profiling code
  *
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -55,7 +55,7 @@ namespace DUtils {
  */
 #define PROFILE(cmd) PROFILE_S(cmd, "")
 
-/** 
+/**
  * Profiles a command with a profiler
  * @param P Profiler object
  * @param name name of profiling item
@@ -74,22 +74,22 @@ class Profiler
 public:
 
   // scales of time
-  static const float MS = 1e3; // milliseconds
-  static const float SECONDS = 1; // seconds
+  static constexpr float MS = 1e3; // milliseconds
+  static constexpr float SECONDS = 1; // seconds
 
 public:
 
-  Profiler(const float scale = Profiler::SECONDS): 
+  Profiler(const float scale = Profiler::SECONDS):
     m_last_profile(""), m_scale(scale){}
   virtual ~Profiler(){}
-  
+
   /**
-   * Starts profiling the given item. If a profile on this item is already 
+   * Starts profiling the given item. If a profile on this item is already
    * active, that previous call with this item is overriden.
    * @param name name of item to profile. If not given, an empty string is used.
    */
   void profile(const std::string &name = "");
-  
+
   /**
    * Does the same as Profiler::stop, but overrides the default scale of time
    * (i.e it multiplies the elapsed time in seconds by
@@ -99,10 +99,10 @@ public:
    * @note use scale 1e3 to store the time in milliseconds
    */
   void stopAndScale(double scale, const std::string &name = "");
-  
+
   /**
    * Stops profiling the given item or the last one if this is not provided.
-   * Adds the elapsed time (in the default scale of time) to the sum of this 
+   * Adds the elapsed time (in the default scale of time) to the sum of this
    * item profile time
    * @param name item name. If not given, last entry used in ::profile is used.
    */
@@ -123,13 +123,13 @@ public:
    * @param name item name. If not given, an empty string is used.
    */
   double back(const std::string &name = "") const;
- 
+
   /**
    * Removes all the measurements of the given item
    * @param name item name. If not given, an empty string is used.
    */
   void reset(const std::string &name = "");
-  
+
   /**
    * Removes the measurements of all the items
    */
@@ -149,7 +149,7 @@ public:
    * @return scale
    */
   inline float getDefaultScale() const { return m_scale; }
-  
+
   /**
    * Sets the default scale of time to use with ::stop
    * @param scale
@@ -161,38 +161,38 @@ public:
    * @param name entry name
    */
   double getMeanTime(const std::string &name = "") const ;
-  
+
   /**
    * Returns the standard deviation of the time of the given entry
    * @param name entry name
    */
   double getStdevTime(const std::string &name = "") const ;
-  
+
   /**
    * Returns the min time of the given entry
    * @param name entry name
    */
   double getMinTime(const std::string &name = "") const ;
-  
+
   /**
    * Returns the max time of the given entry
    * @param name entry name
    */
   double getMaxTime(const std::string &name = "") const ;
-  
+
   /**
    * Returns the sum of the times of the given entry
    * @param name entry name
    */
   double getTotalTime(const std::string &name = "") const;
-  
+
   /**
    * Returns all the time measurements of the given entry
    * @param time (out) measurements
    * @param name entry name
    */
   void getTime(std::vector<double> &time, const std::string &name = "") const;
-  
+
   /**
    * Returns all the statistics of the given entry
    * @param mean (out) mean
@@ -203,7 +203,7 @@ public:
    */
   void getStatistics(double &mean, double &stdev,
     double &min, double &max, const std::string &name = "") const;
-  
+
   /**
    * Prints all the statistics of the given entry
    * @param name entry name
@@ -211,24 +211,24 @@ public:
    * @param scale scale to multiply the measurements before printing
    * @param out stream to print to
    */
-  void showStatistics(const std::string &name = "", 
+  void showStatistics(const std::string &name = "",
     const std::string &suffix = "s", double scale = 1.,
     ostream &out = std::cout) const;
 
 protected:
-  
+
   /// Profile data
   std::map<std::string, std::vector<double> > m_profiles;
-  
+
   /// Starting points
   std::map<std::string, Timestamp> m_start_points;
-  
+
   /// Last used entry
   std::string m_last_profile;
-  
+
   /// Default scale
   float m_scale;
-  
+
 };
 
 }
